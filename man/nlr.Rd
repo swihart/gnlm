@@ -1,0 +1,84 @@
+\name{nlr}
+\title{Nonlinear Normal, Gamma, and Inverse Gaussian Regression Models}
+\alias{nlr}
+\usage{
+nlr(y, mu=NULL, pmu=NULL, distribution="normal", wt=1, delta=1,
+	envir=parent.frame(), print.level=0, typsiz=abs(pmu),
+	ndigit=10, gradtol=0.00001, stepmax=10*sqrt(pmu\%*\%pmu),
+	steptol=0.00001, iterlim=100, fscale=1)
+}
+\description{
+\code{nlr} fits a user-specified nonlinear regression equation by
+least squares (normal) or its generalization for the gamma and inverse
+Gauss distributions.
+
+A nonlinear regression model can be supplied as a formula where
+parameters are unknowns in which case factor variables cannot be used and
+parameters must be scalars. (See \code{\link[rmutil]{finterp}}.)
+
+The printed output includes the -log likelihood (not the deviance),
+the corresponding AIC, the parameter estimates, standard
+errors, and correlations.
+}
+\arguments{
+\item{y}{The response vector or an object of
+class, \code{response} (created by \code{\link[rmutil]{restovec}}) or
+\code{repeated} (created by \code{\link[rmutil]{rmna}} or
+\code{\link[rmutil]{lvna}}).}
+\item{mu}{A function of \code{p} giving the regression equation for
+the mean or a formula beginning with ~, specifying either a linear
+regression function in the Wilkinson and Rogers notation or a general
+nonlinear function with named unknown parameters.}
+\item{pmu}{Vector of initial estimates of the parameters.
+If \code{mu} is a formula with unknown parameters, their estimates
+must be supplied either in their order of appearance in the expression
+or in a named list.}
+\item{distribution}{The distribution to be used: normal, gamma, or
+inverse Gauss.}
+\item{wt}{Weight vector.}
+\item{delta}{Scalar or vector giving the unit of measurement for each
+response value, set to unity by default. For example, if a response is
+measured to two decimals, \code{delta=0.01}. If the response is transformed,
+this must be multiplied by the Jacobian. For example, with a log
+transformation, \code{delta=1/y}.}
+\item{envir}{Environment in which model formulae are to be
+interpreted or a data object of class, \code{repeated}, \code{tccov},
+or \code{tvcov}. If \code{y} has class \code{repeated}, it is used as
+the environment.}
+\item{others}{Arguments controlling \code{\link{nlm}}.}
+}
+\value{
+A list of class \code{nlr} is returned that contains all of the
+relevant information calculated, including error codes.
+}
+\author{J.K. Lindsey}
+\seealso{
+\code{\link[rmutil]{finterp}}, \code{\link[gnlm]{fmr}}, \code{\link{glm}},
+\code{\link[repeated]{glmm}}, \code{\link[repeated]{gnlmm}},
+\code{\link[gnlm]{gnlr}}, \code{\link[gnlm]{gnlr3}}, \code{\link{lm}},
+\code{\link[nls]{nls}}.
+}
+\examples{
+x <- c(3,5,0,0,0,3,2,2,2,7,4,0,0,2,2,2,0,1,3,4)
+y <- c(5.8,11.6,2.2,2.7,2.3,9.4,11.7,3.3,1.5,14.6,9.6,7.4,10.7,6.9,
+	2.6,17.3,2.8,1.2,1.0,3.6)
+# rgamma(20,2,scale=0.2+2*exp(0.1*x))
+# linear least squares regression
+mu1 <- function(p) p[1]+p[2]*x
+summary(lm(y~x))
+nlr(y, mu=mu1, pmu=c(3,0))
+# or
+nlr(y, mu=~x, pmu=c(3,0))
+# or
+nlr(y, mu=~b0+b1*x, pmu=c(3,0))
+# linear gamma regression
+nlr(y, dist="gamma", mu=~x, pmu=c(3,0))
+# nonlinear regression
+mu2 <- function(p) p[1]+p[2]*exp(p[3]*x)
+nlr(y, mu=mu2, pmu=c(0.2,3,0.2))
+# or
+nlr(y, mu=~b0+c0*exp(c1*x), pmu=list(b0=0.2,c0=3,c1=0.2))
+# with gamma distribution
+nlr(y, dist="gamma", mu=~b0+c0*exp(c1*x), pmu=list(b0=0.2,c0=3,c1=0.2))
+}
+\keyword{models}

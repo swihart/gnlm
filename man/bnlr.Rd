@@ -1,0 +1,97 @@
+\name{bnlr}
+\title{Binomial Nonlinear Regression Models}
+\alias{bnlr}
+\usage{
+bnlr(y, link="logit", mu=NULL, linear=NULL, pmu=NULL,
+	pshape=NULL, wt=1, envir=parent.frame(), print.level=0,
+	typsiz=abs(p),ndigit=10, gradtol=0.00001, stepmax=10*sqrt(p\%*\%p),
+	steptol=0.00001, iterlim=100, fscale=1)
+}
+\description{
+\code{bnlr} fits user-specified nonlinear regression equations to
+binomial data with various link functions (\code{logit}, \code{probit},
+\code{comp log log}, \code{log log}, \code{Cauchy}, \code{Student t},
+\code{stable}, or \code{mixture}). The mixture link is a logistic link
+with extra probability mass for \code{y=0} and \code{y=n}.
+
+Nonlinear regression models can be supplied as formulae where
+parameters are unknowns in which case factor variables cannot be used and
+parameters must be scalars. (See \code{\link[rmutil]{finterp}}.)
+
+The printed output includes the -log likelihood (not the deviance),
+the corresponding AIC, the maximum likelihood estimates, standard
+errors, and correlations.
+}
+\arguments{
+\item{y}{A two column matrix of binomial data or censored data or an
+object of class, \code{response} (created by
+\code{\link[rmutil]{restovec}}) or \code{repeated} (created by
+\code{\link[rmutil]{rmna}} or \code{\link[rmutil]{lvna}}). If the
+\code{repeated} data object contains more than one response variable,
+give that object in \code{envir} and give the name of the response
+variable to be used here.}
+\item{link}{A character string containing the name of the
+link function. The \code{Student t}, \code{stable}, and \code{mixture}
+links contain an unknown parameter to be estimated, respectively the
+logarithm of the degrees of freedom, the tail parameter transformed by
+log(tail/(2-tail)), and logit of the mixture probability, so that
+they lie on the whole real line.}
+\item{mu}{A user-specified function of \code{pmu}, and possibly
+\code{linear}, giving the regression equation for the location. This
+may contain a linear part as the second argument to the function. It
+may also be a formula beginning with ~, specifying either a linear
+regression function for the location parameter in the Wilkinson and
+Rogers notation or a general function with named unknown parameters.
+If it contains unknown parameters, the keyword \code{linear} may be
+used to specify a linear part. If nothing is supplied, the location is
+taken to be constant unless the linear argument is given.}
+\item{linear}{A formula beginning with ~ in W&R notation, specifying
+the linear part of the regression function for the location parameter
+or list of two such expressions for the location and/or shape parameters.}
+\item{pmu}{Vector of initial estimates for the location parameters.
+If \code{mu} is a formula with unknown parameters, their estimates
+must be supplied either in their order of appearance in the expression
+or in a named list.}
+\item{pshape}{If the \code{link} is \code{Student t}, an initial
+estimate of the degrees of freedom; if it is \code{stable}, an
+estimate of the tail parameter; if it is \code{mixture}, an estimate
+of the mixture probability.}
+\item{wt}{Weight vector.}
+\item{envir}{Environment in which model formulae are to be
+interpreted or a data object of class, \code{repeated}, \code{tccov},
+or \code{tvcov}; the name of the response variable should be given in
+\code{y}. If \code{y} has class \code{repeated}, it is used as
+the environment.}
+\item{others}{Arguments controlling \code{\link{nlm}}.}
+}
+\value{
+A list of class \code{gnlm} is returned that contains all of the
+relevant information calculated, including error codes.
+}
+\author{J.K. Lindsey}
+\seealso{
+\code{\link[rmutil]{finterp}}, \code{\link{glm}}, \code{\link[gnlm]{gnlr}},
+\code{\link[gnlm]{gnlr3}}
+}
+\examples{
+# assay to estimate LD50
+y <- c(9,9,10,4,1,0,0)
+y <- cbind(y,10-y)
+dose <- log10(100/c(2.686,2.020,1.520,1.143,0.860,0.647,0.486))
+
+summary(glm(y~dose, family=binomial))
+bnlr(y, mu=~dose, pmu=c(1,1))
+summary(glm(y~dose, family=binomial(link=probit)))
+bnlr(y, link="probit", mu=~dose, pmu=c(1,1))
+bnlr(y, link="log log", mu=~dose, pmu=c(1,1))
+bnlr(y, link="comp log log", mu=~dose, pmu=c(1,1))
+bnlr(y, link="Cauchy", mu=~dose, pmu=c(60,-30))
+bnlr(y, link="Student", mu=~dose, pmu=c(60,-30), pshape=0.1)
+bnlr(y, link="stable", mu=~dose, pmu=c(20,-15), pshape=0, stepmax=1)
+bnlr(y, link="mixture", mu=~dose, pmu=c(60,-30), pshape=-2.5)
+#
+mu <- function(p) -p[1]*(log10(p[2])-dose)
+bnlr(y, mu=mu, pmu=c(1,100))
+bnlr(y, link="probit", mu=mu, pmu=c(1,100))
+}
+\keyword{models}

@@ -1,0 +1,10 @@
+bnlr		Binomial Nonlinear Regression Models
+fit.dist	Fit Probability Distributions to Frequency Data
+fmr		Generalized Nonlinear Regression with Finite Mixture
+gnlr		Generalized Nonlinear Regression
+gnlr3		Generalized Nonlinear Regression (3 Parameter Distributions)
+nlr		Nonlinear Regression
+nordr		Nonlinear Ordinal Regression
+ordglm		Generalized Linear Ordinal Regression
+rs2		Two-factor Nonlinear Response Surface
+rs3		Three-factor Nonlinear Response Surface

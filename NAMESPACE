@@ -1,0 +1,9 @@
+useDynLib("gnlm")
+
+import(rmutil)
+
+export(bnlr,fit.dist,fmr,gnlr,gnlr3,
+nlr,weights.nlr,df.residual.nlr,deviance.nlr,print.nlr,
+nordr,print.nordr,
+ordglm,fitted.ordglm,residuals.ordglm,print.ordglm,
+rs2,rs3,print.rs,print.summary.rs,summary.rs)
