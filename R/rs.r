@@ -30,6 +30,35 @@
 
 ### two covariate model
 ###
+
+
+#' Two-factor Box-Tidwell Nonlinear Response Surface Models
+#' 
+#' \code{rs2} fits a two-covariate power-transformed response surface by
+#' iterating the function, \code{\link{glm}}.
+#' 
+#' 
+#' @param y Response variable
+#' @param x1 First covariate
+#' @param x2 Second covariate
+#' @param power Initial estimates of the two power transformations
+#' @param weight Weight vector
+#' @param family glm family
+#' @param iterlim Iteration limit
+#' @return A list of class, \code{rs}, is returned containing the model and the
+#' power estimates.
+#' @author J.K. Lindsey
+#' @seealso \code{\link{lm}}, \code{\link{glm}}, \code{\link[gnlm]{gnlr}},
+#' \code{\link[gnlm]{gnlr3}}, \code{\link[gnlm]{rs3}}
+#' @keywords models
+#' @examples
+#' 
+#' x1 <- rep(1:4,5)
+#' x2 <- rep(1:5,rep(4,5))
+#' y <- rpois(20,1+2*sqrt(x1)+3*log(x2)+4*x1+log(x2)^2+2*sqrt(x1)*log(x2))
+#' rs2(y, x1, x2, family=poisson)
+#' 
+#' @export rs2
 rs2 <- function(y, x1, x2, power=c(1,1), weight=rep(1,length(x1)),
 	family=normal, iterlim=20){
 #
@@ -76,6 +105,39 @@ return(z)}
 
 ### three covariate model
 ###
+
+
+#' Three-factor Box-Tidwell Nonlinear Response Surface Models
+#' 
+#' \code{rs3} fits a three-covariate power-transformed response surface by
+#' iterating the function, \code{\link{glm}}.
+#' 
+#' 
+#' @param y Response variable
+#' @param x1 First covariate
+#' @param x2 Second covariate
+#' @param x3 Third covariate
+#' @param power Initial estimates of the three power transformations
+#' @param weight Weight vector
+#' @param family glm family
+#' @param iterlim Iteration limit
+#' @return A list of class, \code{rs}, is returned containing the model and the
+#' power estimates.
+#' @author J.K. Lindsey
+#' @seealso \code{\link{lm}}, \code{\link{glm}}, \code{\link[gnlm]{gnlr}},
+#' \code{\link[gnlm]{gnlr3}}, \code{\link[gnlm]{rs2}}
+#' @keywords models
+#' @examples
+#' 
+#' x1 <- rep(1:4,5)
+#' x2 <- rep(1:5,rep(4,5))
+#' x3 <- c(rep(1:3,6),1,2)
+#' #y <- rpois(20,1+2*sqrt(x1)+3*log(x2)+1/x3+4*x1+log(x2)^2+1/x3^2+
+#' #	2*sqrt(x1)*log(x2)+sqrt(x1)/x3+log(x2)/x3)
+#' y <- c(9,11,14,33,11,19,20,27,22,32,24,24,20,28,25,41,26,31,37,34)
+#' rs3(y, x1, x2, x3, family=poisson)
+#' 
+#' @export rs3
 rs3 <- function(y, x1, x2, x3, power=c(1,1,1), weight=rep(1,length(x1)),
 	family=normal, iterlim=20){
 #

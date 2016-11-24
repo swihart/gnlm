@@ -2,9 +2,12 @@ Package: gnlm
 Version: 1.0
 Title: Generalized Nonlinear Regression Models
 Author: Jim Lindsey <jlindsey@gen.unimaas.nl>
-Maintainer:  Jim Lindsey <jlindsey@gen.unimaas.nl>
-Depends: R (>= 1.4), rmutil
+Maintainer: Jim Lindsey <jlindsey@gen.unimaas.nl>
+Depends:
+    R (>= 1.4),
+    rmutil
 Description: A variety of functions to fit linear and nonlinear
-	regression with a large selection of distributions.
+    regression with a large selection of distributions.
 License: GPL version 2 or later
 URL: popgen.unimaas.nl/~jlindsey/rcode.html
+RoxygenNote: 5.0.1

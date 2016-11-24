@@ -29,6 +29,186 @@
 #    A function to fit nonlinear regression models with a variety of
 # one and two parameter distributions.
 
+
+
+#' Generalized Nonlinear Regression Models for One and Two Parameter
+#' Distributions
+#' 
+#' \code{gnlr} fits user-specified nonlinear regression equations to one or
+#' both parameters of the common one and two parameter distributions. A
+#' user-specified -log likelihood can also be supplied for the distribution.
+#' Most distributions allow data to be left, right, and/or interval censored.
+#' 
+#' Nonlinear regression models can be supplied as formulae where parameters are
+#' unknowns in which case factor variables cannot be used and parameters must
+#' be scalars. (See \code{\link[rmutil]{finterp}}.)
+#' 
+#' The printed output includes the -log likelihood (not the deviance), the
+#' corresponding AIC, the maximum likelihood estimates, standard errors, and
+#' correlations.
+#' 
+#' 
+#' @param y A response vector for uncensored data, a two column matrix for
+#' binomial data or censored data, with the second column being the censoring
+#' indicator (1: uncensored, 0: right censored, -1: left censored), or an
+#' object of class, \code{response} (created by \code{\link[rmutil]{restovec}})
+#' or \code{repeated} (created by \code{\link[rmutil]{rmna}} or
+#' \code{\link[rmutil]{lvna}}). If the \code{repeated} data object contains
+#' more than one response variable, give that object in \code{envir} and give
+#' the name of the response variable to be used here. The beta, simplex, and
+#' two-sided power distributions for proportions do not allow left or right
+#' censoring (only interval censoring).
+#' @param distribution Either a character string containing the name of the
+#' distribution or a function giving the -log likelihood. (In the latter case,
+#' all initial parameter estimates are supplied in \code{pmu}.)
+#' 
+#' Distributions are binomial, beta binomial, double binomial, mult(iplicative)
+#' binomial, Poisson, negative binomial, double Poisson, mult(iplicative)
+#' Poisson, gamma count, Consul generalized Poisson, logarithmic series,
+#' geometric, normal, inverse Gauss, logistic, exponential, gamma, Weibull,
+#' extreme value, Cauchy, Pareto, Laplace, Levy, beta, simplex, and two-sided
+#' power. All but the binomial-based distributions and the beta, simplex, and
+#' two-sided power distributions may be right and/or left censored. (For
+#' definitions of distributions, see the corresponding [dpqr]distribution
+#' help.)
+#' @param mu A user-specified function of \code{pmu}, and possibly
+#' \code{linear}, giving the regression equation for the location. This may
+#' contain a linear part as the second argument to the function. It may also be
+#' a formula beginning with ~, specifying either a linear regression function
+#' for the location parameter in the Wilkinson and Rogers notation or a general
+#' function with named unknown parameters. If it contains unknown parameters,
+#' the keyword \code{linear} may be used to specify a linear part. If nothing
+#' is supplied, the location is taken to be constant unless the linear argument
+#' is given.
+#' @param shape A user-specified function of \code{pshape}, and possibly
+#' \code{linear} and/or \code{mu}, giving the regression equation for the
+#' dispersion or shape parameter. This may contain a linear part as the second
+#' argument to the function and the location function as last argument (in
+#' which case \code{shfn} must be set to TRUE). It may also be a formula
+#' beginning with ~, specifying either a linear regression function for the
+#' shape parameter in the Wilkinson and Rogers notation or a general function
+#' with named unknown parameters. If it contains unknown parameters, the
+#' keyword \code{linear} may be used to specify a linear part and the keyword
+#' \code{mu} to specify a function of the location parameter. If nothing is
+#' supplied, this parameter is taken to be constant unless the linear argument
+#' is given. This parameter is the logarithm of the usual one.
+#' @param linear A formula beginning with ~ in W&R notation, specifying the
+#' linear part of the regression function for the location parameter or list of
+#' two such expressions for the location and/or shape parameters.
+#' @param pmu Vector of initial estimates for the location parameters. If
+#' \code{mu} is a formula with unknown parameters, their estimates must be
+#' supplied either in their order of appearance in the expression or in a named
+#' list. If \code{distribution} is a user-supplied -log likelihood function,
+#' all initial estimates must be supplied here.
+#' @param pshape Vector of initial estimates for the shape parameters. If
+#' \code{shape} is a formula with unknown parameters, their estimates must be
+#' supplied either in their order of appearance in the expression or in a named
+#' list.
+#' @param exact If TRUE, fits the exact likelihood function for continuous data
+#' by integration over intervals of observation given in \code{delta}, i.e.
+#' interval censoring.
+#' @param wt Weight vector.
+#' @param delta Scalar or vector giving the unit of measurement (always one for
+#' discrete data) for each response value, set to unity by default. For
+#' example, if a response is measured to two decimals, \code{delta=0.01}. If
+#' the response is transformed, this must be multiplied by the Jacobian. The
+#' transformation cannot contain unknown parameters. For example, with a log
+#' transformation, \code{delta=1/y}. (The delta values for the censored
+#' response are ignored.)
+#' @param shfn If true, the supplied shape function depends on the location
+#' (function). The name of this location function must be the last argument of
+#' the shape function.
+#' @param common If TRUE, \code{mu} and \code{shape} must both be either
+#' functions with, as argument, a vector of parameters having some or all
+#' elements in common between them so that indexing is in common between them
+#' or formulae with unknowns. All parameter estimates must be supplied in
+#' \code{pmu}. If FALSE, parameters are distinct between the two functions and
+#' indexing starts at one in each function.
+#' @param envir Environment in which model formulae are to be interpreted or a
+#' data object of class, \code{repeated}, \code{tccov}, or \code{tvcov}; the
+#' name of the response variable should be given in \code{y}. If \code{y} has
+#' class \code{repeated}, it is used as the environment.
+#' @param others Arguments controlling \code{\link{nlm}}.
+#' @return A list of class \code{gnlm} is returned that contains all of the
+#' relevant information calculated, including error codes.
+#' @author J.K. Lindsey
+#' @seealso \code{\link[rmutil]{finterp}}, \code{\link[gnlm]{fmr}},
+#' \code{\link{glm}}, \code{\link[repeated]{gnlmix}},
+#' \code{\link[repeated]{glmm}}, \code{\link[repeated]{gnlmm}},
+#' \code{\link[gnlm]{gnlr3}}, \code{\link{lm}}, \code{\link[gnlm]{nlr}},
+#' \code{\link[nls]{nls}}.
+#' @keywords models
+#' @examples
+#' 
+#' sex <- c(rep(0,10),rep(1,10))
+#' sexf <- gl(2,10)
+#' age <- c(8,10,12,12,8,7,16,7,9,11,8,9,14,12,12,11,7,7,7,12)
+#' y <- cbind(c(9.2, 7.3,13.0, 6.9, 3.9,14.9,17.8, 4.8, 6.4, 3.3,17.2,
+#' 	14.4,17.0, 5.0,17.3, 3.8,19.4, 5.0, 2.0,19.0),
+#' 	c(0,1,0,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1))
+#' # y <- cbind(rweibull(20,2,2+2*sex+age),rbinom(20,1,0.7))
+#' # linear regression with inverse Gauss distribution
+#' mu <- function(p) p[1]+p[2]*sex+p[3]*age
+#' gnlr(y, dist="inverse Gauss", mu=mu, pmu=c(3,0,0), pshape=1)
+#' # or equivalently
+#' gnlr(y, dist="inverse Gauss", mu=~sexf+age, pmu=c(3,0,0), pshape=1)
+#' # or
+#' gnlr(y, dist="inverse Gauss", linear=~sexf+age, pmu=c(3,0,0), pshape=1)
+#' # or
+#' gnlr(y, dist="inverse Gauss", mu=~b0+b1*sex+b2*age,
+#' 	pmu=list(b0=3,b1=0,b2=0), pshape=1)
+#' #
+#' # nonlinear regression with inverse Gauss distribution
+#' mu <- function(p, linear) exp(linear)
+#' gnlr(y, dist="inverse Gauss", mu=mu, linear=~sexf+age, pmu=c(3,0,0),
+#' 	pshape=-1)
+#' # or equivalently
+#' gnlr(y, dist="inverse Gauss", mu=~exp(b0+b1*sex+b2*age),
+#' 	pmu=list(b0=3,b1=0,b2=0), pshape=-1)
+#' # or
+#' gnlr(y, dist="inverse Gauss", mu=~exp(linear), linear=~sexf+age,
+#' 	pmu=c(3,0,0), pshape=-1)
+#' #
+#' # include regression for the shape parameter with same mu function
+#' shape <- function(p) p[1]+p[2]*sex+p[3]*age
+#' gnlr(y, dist="inverse Gauss", mu=mu, linear=~sexf+age, shape=shape,
+#' 	pmu=c(3,0,0), pshape=c(3,0,0))
+#' # or equivalently
+#' gnlr(y, dist="inverse Gauss", mu=mu, linear=~sexf+age,
+#' 	shape=~sexf+age, pmu=c(3,0,0), pshape=c(3,0,0))
+#' # or
+#' gnlr(y, dist="inverse Gauss", mu=mu, linear=list(~sex+age,~sex+age),
+#' 	pmu=c(3,0,0),pshape=c(3,0,0))
+#' # or
+#' gnlr(y, dist="inverse Gauss", mu=mu, linear=~sex+age,
+#' 	shape=~c0+c1*sex+c2*age, pmu=c(3,0,0),
+#' 	pshape=list(c0=3,c1=0,c2=0))
+#' #
+#' # shape as a function of the location
+#' shape <- function(p, mu) p[1]+p[2]*sex+p[3]*mu
+#' gnlr(y, dist="inverse Gauss", mu=~age, shape=shape, pmu=c(3,0),
+#' 	pshape=c(3,0,0), shfn=TRUE)
+#' # or
+#' gnlr(y, dist="inverse Gauss", mu=~age, shape=~a+b*sex+c*mu, pmu=c(3,0),
+#' 	pshape=c(3,0,0), shfn=TRUE)
+#' #
+#' # common parameter in location and shape functions for age
+#' mu <- function(p) exp(p[1]+p[2]*age)
+#' shape <- function(p, mu) p[3]+p[4]*sex+p[2]*age
+#' gnlr(y, dist="inverse Gauss", mu=mu, shape=shape, pmu=c(3,0,1,0),
+#' 	common=TRUE)
+#' # or
+#' gnlr(y, dist="inverse Gauss", mu=~exp(a+b*age), shape=~c+d*sex+b*age,
+#' 	pmu=c(3,0,1,0), common=TRUE)
+#' #
+#' # user-supplied -log likelihood function
+#' y <- rnorm(20,2+3*sex,2)
+#' dist <- function(p)-sum(dnorm(y,p[1]+p[2]*sex,p[3],log=TRUE))
+#' gnlr(y, dist=dist,pmu=1:3)
+#' dist <- ~-sum(dnorm(y,a+b*sex,v,log=TRUE))
+#' gnlr(y, dist=dist,pmu=1:3)
+#' 
+#' @export gnlr
 gnlr <- function(y=NULL, distribution="normal", pmu=NULL, pshape=NULL, mu=NULL,
 	shape=NULL, linear=NULL, exact=FALSE, wt=1, delta=1, shfn=FALSE,
 	common=FALSE, envir=parent.frame(), print.level=0, typsize=abs(p),

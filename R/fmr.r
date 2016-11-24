@@ -29,6 +29,160 @@
 #    A function to fit nonlinear regression models with a variety of
 # distributions and a mixture in the tail(s).
 
+
+
+#' Generalized Nonlinear Regression Models with Two or Three Point Mixtures
+#' 
+#' \code{fmr} fits user specified nonlinear regression equations to the
+#' location parameter of the common one and two parameter distributions. (The
+#' log of the scale parameter is estimated to ensure positivity.)
+#' 
+#' For the Poisson and related distributions, the mixture involves the zero
+#' category. For the binomial and related distributions, it involves the two
+#' extreme categories. For all other distributions, it involves either left or
+#' right censored individuals. A user-specified -log likelihood can also be
+#' supplied for the distribution.
+#' 
+#' Nonlinear regression models can be supplied as formulae where parameters are
+#' unknowns in which case factor variables cannot be used and parameters must
+#' be scalars. (See \code{\link[rmutil]{finterp}}.)
+#' 
+#' The printed output includes the -log likelihood (not the deviance), the
+#' corresponding AIC, the maximum likelihood estimates, standard errors, and
+#' correlations.
+#' 
+#' 
+#' @param y A response vector for uncensored data, a two column matrix for
+#' binomial data or censored data, with the second column being the censoring
+#' indicator (1: uncensored, 0: right censored, -1: left censored), or an
+#' object of class, \code{response} (created by \code{\link[rmutil]{restovec}})
+#' or \code{repeated} (created by \code{\link[rmutil]{rmna}} or
+#' \code{\link[rmutil]{lvna}}). If the \code{repeated} data object contains
+#' more than one response variable, give that object in \code{envir} and give
+#' the name of the response variable to be used here.
+#' @param distribution Either a character string containing the name of the
+#' distribution or a function giving the -log likelihood and calling the
+#' location and mixture functions. Distributions are binomial, beta binomial,
+#' double binomial, multiplicative binomial, Poisson, negative binomial, double
+#' Poisson, multiplicative Poisson, gamma count, Consul, geometric, normal,
+#' inverse Gauss, logistic, exponential, gamma, Weibull, extreme value, Pareto,
+#' Cauchy, Student t, Laplace, and Levy. (For definitions of distributions, see
+#' the corresponding [dpqr]distribution help.)
+#' @param mu A user-specified function of \code{pmu}, and possibly
+#' \code{linear}, giving the regression equation for the location. This may
+#' contain a linear part as the second argument to the function. It may also be
+#' a formula beginning with ~, specifying either a linear regression function
+#' for the location parameter in the Wilkinson and Rogers notation or a general
+#' function with named unknown parameters. If it contains unknown parameters,
+#' the keyword \code{linear} may be used to specify a linear part. If nothing
+#' is supplied, the location is taken to be constant unless the linear argument
+#' is given.
+#' @param mix A user-specified function of \code{pmix}, and possibly
+#' \code{linear}, giving the regression equation for the mixture parameter.
+#' This may contain a linear part as the second argument to the function. It
+#' may also be a formula beginning with ~, specifying either a linear
+#' regression function for the mixture parameter in the Wilkinson and Rogers
+#' notation or a general function with named unknown parameters. If it contains
+#' unknown parameters, the keyword \code{linear} may be used to specify a
+#' linear part. If nothing is supplied, this parameter is taken to be constant.
+#' This parameter is the logit of the mixture probability.
+#' @param linear A formula beginning with ~ in W&R notation, or list of two
+#' such expressions, specifying the linear part of the regression function for
+#' the location or location and mixture parameters.
+#' @param pmu Vector of initial estimates for the location parameters. If
+#' \code{mu} is a formula with unknown parameters, their estimates must be
+#' supplied either in their order of appearance in the expression or in a named
+#' list.
+#' @param pshape An initial estimate for the shape parameter.
+#' @param pmix Vector of initial estimates for the mixture parameters. If
+#' \code{mix} is a formula with unknown parameters, their estimates must be
+#' supplied either in their order of appearance in the expression or in a named
+#' list.
+#' @param censor \code{right}, \code{left}, or \code{both} indicating where the
+#' mixing distribution is placed. \code{both} is only possible for binomial
+#' data.
+#' @param exact If TRUE, fits the exact likelihood function for continuous data
+#' by integration over intervals of observation given in \code{delta}, i.e.
+#' interval censoring.
+#' @param wt Weight vector.
+#' @param delta Scalar or vector giving the unit of measurement (always one for
+#' discrete data) for each response value, set to unity by default - for
+#' example, if a response is measured to two decimals, \code{delta=0.01}. If
+#' the response is transformed, this must be multiplied by the Jacobian. The
+#' transformation cannot contain unknown parameters. For example, with a log
+#' transformation, \code{delta=1/y}.
+#' @param common If TRUE, \code{mu} and \code{mix} must both be either
+#' functions with, as argument, a vector of parameters having some or all
+#' elements in common between them so that indexing is in common between them
+#' or formulae with unknowns. All parameter estimates must be supplied in
+#' \code{pmu}. If FALSE, parameters are distinct between the two functions and
+#' indexing starts at one in each function.
+#' @param envir Environment in which model formulae are to be interpreted or a
+#' data object of class, \code{repeated}, \code{tccov}, or \code{tvcov}; the
+#' name of the response variable should be given in \code{y}. If \code{y} has
+#' class \code{repeated}, it is used as the environment.
+#' @param others Arguments controlling \code{\link{nlm}}.
+#' @return A list of class \code{gnlm} is returned that contains all of the
+#' relevant information calculated, including error codes.
+#' @author J.K. Lindsey
+#' @seealso \code{\link[rmutil]{finterp}}, \code{\link{glm}},
+#' \code{\link[gnlm]{gnlr}}, \code{\link[gnlm]{gnlr3}}, \code{\link{lm}}.
+#' @keywords models
+#' @examples
+#' 
+#' sex <- c(rep(0,10),rep(1,10))
+#' sexf <- gl(2,10)
+#' age <- c(8,10,12,12,8,7,16,7,9,11,8,9,14,12,12,11,7,7,7,12)
+#' y <- cbind(c(9.2, 7.3,13.0, 6.9, 3.9,14.9,17.8, 4.8, 6.4, 3.3,17.2,
+#' 	14.4,17.0, 5.0,17.3, 3.8,19.4, 5.0, 2.0,19.0),
+#' 	c(0,1,0,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1))
+#' # y <- cbind(rweibull(20,2,2+2*sex+age),rbinom(20,1,0.7))
+#' # log linear regression with Weibull distribution with a point mass
+#' #   for right censored individuals
+#' mu <- function(p) exp(p[1]+p[2]*sex+p[3]*age)
+#' fmr(y, dist="Weibull", mu=mu, pmu=c(4,0,0), pmix=0.5, pshape=1)
+#' # or equivalently
+#' fmr(y, dist="Weibull", mu=function(p,linear) exp(linear),
+#' 	linear=~sexf+age, pmu=c(4,0,0), pmix=0.5, pshape=1)
+#' # or
+#' fmr(y, dist="Weibull", mu=~exp(b0+b1*sex+b2*age), pmu=list(b0=4,b1=0,b2=0),
+#' 	pmix=0.5, pshape=1)
+#' #
+#' # include logistic regression for the mixture parameter
+#' mix <- function(p) p[1]+p[2]*sex
+#' fmr(y, dist="Weibull", mu=~exp(a+b*age), mix=mix, pmu=c(4,0),
+#' 	pmix=c(10,0), pshape=0.5)
+#' # or equivalently
+#' fmr(y, dist="Weibull", mu=function(p,linear) exp(linear),
+#' 	linear=list(~age,~sexf), pmu=c(4,0), pmix=c(10,0), pshape=0.5)
+#' # or
+#' fmr(y, dist="Weibull", mu=~exp(b0+b1*age), mix=~c0+c1*sex,
+#' 	pmu=list(b0=4,b1=0), pmix=list(c0=10,c1=0), pshape=0.5)
+#' #
+#' # generate zero-inflated negative binomial data
+#' x1 <- rpois(50,4)
+#' x2 <- rpois(50,4)
+#' ind <- rbinom(50,1,1/(1+exp(-1-0.1*x1)))
+#' y <- ifelse(ind,rnbinom(50,3,mu=exp(1+0.2*x2)),0)
+#' # standard Poisson models
+#' gnlr(y, dist="Poisson", mu=~exp(a), pmu=1)
+#' gnlr(y, dist="Poisson", mu=~exp(linear), linear=~x2, pmu=c(1,0.2))
+#' # zero-inflated Poisson ZIP
+#' fmr(y, dist="Poisson", mu=~exp(a), pmu=1, pmix=0)
+#' fmr(y, dist="Poisson", mu=~exp(linear), linear=~x2, pmu=c(1,0.2), pmix=0)
+#' fmr(y, dist="Poisson", mu=~exp(a), mix=~x1, pmu=1, pmix=c(1,0))
+#' fmr(y, dist="Poisson", mu=~exp(linear), linear=~x2, mix=~x1, pmu=c(1,0.2),
+#' 	pmix=c(1,0))
+#' # zero-inflated negative binomial
+#' fmr(y, dist="negative binomial", mu=~exp(a), pmu=1, pshape=0, pmix=0)
+#' fmr(y, dist="negative binomial", mu=~exp(linear), linear=~x2, pmu=c(1,0.2),
+#' 	pshape=0, pmix=0)
+#' fmr(y, dist="negative binomial", mu=~exp(a), mix=~x1, pmu=1, pshape=0,
+#'        pmix=c(1,0))
+#' fmr(y, dist="negative binomial", mu=~exp(linear), linear=~x2, mix=~x1,
+#' 	pmu=c(1,0.2), pshape=0, pmix=c(1,0))
+#' 
+#' @export fmr
 fmr <- function(y=NULL, distribution="normal", mu=NULL, mix=NULL, linear=NULL,
 	pmu=NULL, pmix=NULL, pshape=NULL, censor="right", exact=FALSE,
 	wt=1, delta=1, common=FALSE, envir=parent.frame(), print.level=0,
