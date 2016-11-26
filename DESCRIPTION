@@ -1,5 +1,5 @@
 Package: gnlm
-Version: 1.0
+Version: 1.1.0
 Title: Generalized Nonlinear Regression Models
 Author: Jim Lindsey <jlindsey@gen.unimaas.nl>
 Maintainer: Jim Lindsey <jlindsey@gen.unimaas.nl>
@@ -8,6 +8,6 @@ Depends:
     rmutil
 Description: A variety of functions to fit linear and nonlinear
     regression with a large selection of distributions.
-License: GPL version 2 or later
+License: GPL (>= 2)
 URL: popgen.unimaas.nl/~jlindsey/rcode.html
 RoxygenNote: 5.0.1

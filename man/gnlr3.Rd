@@ -106,7 +106,21 @@ data object of class, \code{repeated}, \code{tccov}, or \code{tvcov}; the
 name of the response variable should be given in \code{y}. If \code{y} has
 class \code{repeated}, it is used as the environment.}
 
-\item{others}{Arguments controlling \code{\link{nlm}}.}
+\item{print.level}{Arguments controlling \code{\link{nlm}}.}
+
+\item{typsize}{Arguments controlling \code{\link{nlm}}.}
+
+\item{ndigit}{Arguments controlling \code{\link{nlm}}.}
+
+\item{gradtol}{Arguments controlling \code{\link{nlm}}.}
+
+\item{stepmax}{Arguments controlling \code{\link{nlm}}.}
+
+\item{steptol}{Arguments controlling \code{\link{nlm}}.}
+
+\item{iterlim}{Arguments controlling \code{\link{nlm}}.}
+
+\item{fscale}{Arguments controlling \code{\link{nlm}}.}
 }
 \value{
 A list of class \code{gnlm} is returned that contains all of the
@@ -188,7 +202,7 @@ J.K. Lindsey
 \seealso{
 \code{\link[rmutil]{finterp}}, \code{\link[gnlm]{fmr}},
 \code{\link{glm}}, \code{\link[gnlm]{gnlr}}, \code{\link{lm}},
-\code{\link[gnlm]{nlr}}, \code{\link[nls]{nls}}.
+\code{\link[gnlm]{nlr}}, \code{\link[stats]{nls}}.
 }
 \keyword{models}
 

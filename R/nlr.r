@@ -66,14 +66,21 @@
 #' @param envir Environment in which model formulae are to be interpreted or a
 #' data object of class, \code{repeated}, \code{tccov}, or \code{tvcov}. If
 #' \code{y} has class \code{repeated}, it is used as the environment.
-#' @param others Arguments controlling \code{\link{nlm}}.
+#' @param print.level Arguments controlling \code{\link{nlm}}.
+#' @param typsize Arguments controlling \code{\link{nlm}}.
+#' @param ndigit Arguments controlling \code{\link{nlm}}.
+#' @param gradtol Arguments controlling \code{\link{nlm}}.
+#' @param stepmax Arguments controlling \code{\link{nlm}}.
+#' @param steptol Arguments controlling \code{\link{nlm}}.
+#' @param iterlim Arguments controlling \code{\link{nlm}}.
+#' @param fscale Arguments controlling \code{\link{nlm}}.
 #' @return A list of class \code{nlr} is returned that contains all of the
 #' relevant information calculated, including error codes.
 #' @author J.K. Lindsey
 #' @seealso \code{\link[rmutil]{finterp}}, \code{\link[gnlm]{fmr}},
 #' \code{\link{glm}}, \code{\link[repeated]{glmm}},
 #' \code{\link[repeated]{gnlmm}}, \code{\link[gnlm]{gnlr}},
-#' \code{\link[gnlm]{gnlr3}}, \code{\link{lm}}, \code{\link[nls]{nls}}.
+#' \code{\link[gnlm]{gnlr3}}, \code{\link{lm}}, \code{\link[stats]{nls}}.
 #' @keywords models
 #' @examples
 #' 
@@ -114,7 +121,7 @@ np <- length(pmu)
 #
 # check if a data object is being supplied
 #
-respenv <- exists(deparse(substitute(y)),env=parent.frame())&&
+respenv <- exists(deparse(substitute(y)),envir=parent.frame())&&
 	inherits(y,"repeated")&&!inherits(envir,"repeated")
 if(respenv){
 	if(dim(y$response$y)[2]>1)

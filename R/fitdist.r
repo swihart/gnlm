@@ -52,7 +52,11 @@
 #' frequency polygon of fitted values.
 #' @param add If TRUE, adds a new frequency polygon of fitted values without
 #' replotting the histogram.
-#' @param others Plotting control options.
+#' @param xlab Plotting control options.
+#' @param ylab Plotting control options.
+#' @param xlim Plotting control options.
+#' @param main Plotting control options.
+#' @param ... Plotting control options.
 #' @author J.K. Lindsey
 #' @references Lindsey, J.K. (1995) Introductory Statistics: A Modelling
 #' Approach. Oxford: Oxford University Press.

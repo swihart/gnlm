@@ -19,9 +19,9 @@
 #  SYNOPSIS
 #
 #     rs2(y, x1, x2, power=c(1,1), weight=rep(1,length(x1)),
-#	family=normal, iterlim=20)
+#	family=gaussian, iterlim=20)
 #     rs3(y, x1, x2, x3, power=c(1,1,1), weight=rep(1,length(x1)),
-#	family=normal, iterlim=20)
+#	family=gaussian, iterlim=20)
 #
 #  DESCRIPTION
 #
@@ -60,7 +60,7 @@
 #' 
 #' @export rs2
 rs2 <- function(y, x1, x2, power=c(1,1), weight=rep(1,length(x1)),
-	family=normal, iterlim=20){
+	family=gaussian, iterlim=20){
 #
 # check estimates and data
 #
@@ -78,7 +78,7 @@ while(test){
 	xx1 <- x1^a
 	xx2 <- x2^b
 	u <- glm(y~xx1+xx2+I(xx1^2)+I(xx2^2)+xx1:xx2,family=family,
-		weight=weight)
+		weights=weight)
 	z1 <- (u$coef[2]*xx1+2*u$coef[4]*xx1^2+u$coef[6]*xx1*xx2)*
 		log(ifelse(x1==0,1,x1))
 	z2 <- (u$coef[3]*xx2+2*u$coef[5]*xx2^2+u$coef[6]*xx1*xx2)*
@@ -86,7 +86,7 @@ while(test){
 	if(any(is.na(c(z1,z2))))
 		stop(paste("NAs in calculating estimates:",a,b))
 	u <- glm(y~xx1+xx2+I(xx1^2)+I(xx2^2)+xx1:xx2+z1+z2,
-		family=family,weight=weight)
+		family=family,weights=weight)
 	a <- a+u$coef[6]
 	b <- b+u$coef[7]
 	if(any(is.na(c(a,b))))stop(paste("NAs in calculating estimates:",a,b))
@@ -95,7 +95,7 @@ while(test){
 #
 # set up final results
 #
-z <- glm(y~xx1+xx2+I(xx1^2)+I(xx2^2)+xx1:xx2,family=family,weight=weight)
+z <- glm(y~xx1+xx2+I(xx1^2)+I(xx2^2)+xx1:xx2,family=family,weights=weight)
 z$df.residual <- z$df.residual-2
 z$aic <- z$aic+4
 z$powers <- c(a,b)
@@ -139,7 +139,7 @@ return(z)}
 #' 
 #' @export rs3
 rs3 <- function(y, x1, x2, x3, power=c(1,1,1), weight=rep(1,length(x1)),
-	family=normal, iterlim=20){
+	family=gaussian, iterlim=20){
 #
 # check estimates and data
 #
@@ -162,7 +162,7 @@ while(test){
 	xx13 <- xx1*xx3
 	xx23 <- xx2*xx3
 	u <- glm(y~xx1+xx2+xx3+I(xx1^2)+I(xx2^2)+I(xx3^2)+
-		xx12+xx13+xx23,family=family,weight=weight)
+		xx12+xx13+xx23,family=family,weights=weight)
 	z1 <- (u$coef[2]*xx1+2*u$coef[5]*xx1^2+u$coef[8]*xx12+
 		+u$coef[9]*xx13)*log(ifelse(x1==0,1,x1))
 	z2 <- (u$coef[3]*xx2+2*u$coef[6]*xx2^2+u$coef[8]*xx12+
@@ -172,7 +172,7 @@ while(test){
 	if(any(is.na(c(z1,z2,z3))))
 		stop(paste("NAs in calculating estimates:",a,b,d))
 	u <- glm(y~xx1+xx2+xx3+I(xx1^2)+I(xx2^2)+I(xx3^2)+
-		xx12+xx13+xx23+z1+z2+z3,family=family,weight=weight)
+		xx12+xx13+xx23+z1+z2+z3,family=family,weights=weight)
 	a <- a+u$coef[11]
 	b <- b+u$coef[12]
 	d <- d+u$coef[13]
@@ -184,7 +184,7 @@ while(test){
 # set up final results
 #
 z <- glm(y~xx1+xx2+xx3+I(xx1^2)+I(xx2^2)+I(xx3^2)+xx12+xx13+xx23,
-	family=family,weight=weight)
+	family=family,weights=weight)
 z$df.residual <- z$df.residual-3
 z$aic <- z$aic+6
 z$powers <- c(a,b,d)
@@ -198,13 +198,17 @@ print.rs <- function(z,...){
 cat("\nPowered transformed response surface\n\n")
 cat("Powers:",z$powers,"\n")
 cat("Iterations:",z$iterations,"\n")
-print.glm(z,...)}
+#print.glm(z,...)
+class(z) <- "glm"
+print(z)}
 
 print.summary.rs <- function(z,...){
 cat("\nPowered transformed response surface\n\n")
 cat("Powers:",z$powers,"\n")
 cat("Iterations:",z$iterations,"\n")
-print.summary.glm(z,...)}
+#print.summary.glm(z,...)
+class(z) <- "summary.glm"
+print(z)}
 
 summary.rs <- function(z,...){
 zz <- summary.glm(z,...)
@@ -212,3 +216,5 @@ class(zz) <- c("summary.rs",class(zz))
 if(!is.null(z$powers))zz$powers <- z$powers
 if(!is.null(z$iterations))zz$iterations <- z$iterations
 zz}
+
+

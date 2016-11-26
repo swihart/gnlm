@@ -128,7 +128,14 @@
 #' data object of class, \code{repeated}, \code{tccov}, or \code{tvcov}; the
 #' name of the response variable should be given in \code{y}. If \code{y} has
 #' class \code{repeated}, it is used as the environment.
-#' @param others Arguments controlling \code{\link{nlm}}.
+#' @param print.level Arguments controlling \code{\link{nlm}}.
+#' @param typsize Arguments controlling \code{\link{nlm}}.
+#' @param ndigit Arguments controlling \code{\link{nlm}}.
+#' @param gradtol Arguments controlling \code{\link{nlm}}.
+#' @param stepmax Arguments controlling \code{\link{nlm}}.
+#' @param steptol Arguments controlling \code{\link{nlm}}.
+#' @param iterlim Arguments controlling \code{\link{nlm}}.
+#' @param fscale Arguments controlling \code{\link{nlm}}.
 #' @return A list of class \code{gnlm} is returned that contains all of the
 #' relevant information calculated, including error codes.
 #' @author J.K. Lindsey
@@ -136,7 +143,7 @@
 #' \code{\link{glm}}, \code{\link[repeated]{gnlmix}},
 #' \code{\link[repeated]{glmm}}, \code{\link[repeated]{gnlmm}},
 #' \code{\link[gnlm]{gnlr3}}, \code{\link{lm}}, \code{\link[gnlm]{nlr}},
-#' \code{\link[nls]{nls}}.
+#' \code{\link[stats]{nls}}.
 #' @keywords models
 #' @examples
 #' 
@@ -208,6 +215,10 @@
 #' dist <- ~-sum(dnorm(y,a+b*sex,v,log=TRUE))
 #' gnlr(y, dist=dist,pmu=1:3)
 #' 
+#' @importFrom graphics lines par rect 
+#' @importFrom stats dbeta dbinom dcauchy dexp dgamma dlnorm dlogis dnbinom dnorm dpois dt dweibull family binomial gaussian Gamma inverse.gaussian poisson quasi quasibinomial quasipoisson glm model.frame model.matrix model.response na.fail nlm pbeta pcauchy pgamma pgeom plogis pnbinom pnorm ppois pt pweibull qnorm summary.glm terms weighted.mean
+#' @import rmutil
+#' @useDynLib gnlm
 #' @export gnlr
 gnlr <- function(y=NULL, distribution="normal", pmu=NULL, pshape=NULL, mu=NULL,
 	shape=NULL, linear=NULL, exact=FALSE, wt=1, delta=1, shfn=FALSE,
@@ -243,8 +254,8 @@ plevy <- function(y, m, s)
 		max=as.integer(16),
 		err=integer(1),
 		res=double(n),
-		DUP=FALSE,
-		PACKAGE="rmutil")$res
+		#DUP=FALSE,
+		PACKAGE="gnlm")$res
 #
 # simplex cdf
 #
@@ -260,8 +271,8 @@ psimplex <- function(y, m, s)
         	max=as.integer(16),
         	err=integer(1),
         	res=double(n),
-        	DUP=FALSE,
-		PACKAGE="rmutil")$res
+        	#DUP=FALSE,
+		PACKAGE="gnlm")$res
 
 call <- sys.call()
 #
@@ -313,7 +324,7 @@ if(n==0)stop(paste(deparse(substitute(y)),"not found or of incorrect type"))
 #
 # check if a data object is being supplied
 #
-respenv <- exists(deparse(substitute(y)),env=parent.frame())&&
+respenv <- exists(deparse(substitute(y)),envir=parent.frame())&&
 	inherits(y,"repeated")&&!inherits(envir,"repeated")
 if(respenv){
 	if(dim(y$response$y)[2]>1)
@@ -768,14 +779,16 @@ if (!censor){
 			-sum(.C("ddb",as.integer(y[,1]),as.integer(nn),
 				as.double(mu1(p)),as.double(exp(sh1(p))),
 				as.integer(n),as.double(wt),res=double(n),
-				DUP=FALSE,PACKAGE="rmutil")$res)}
+				#DUP=FALSE,
+				PACKAGE="gnlm")$res)}
 		const <- 0},
 	"mult binomial"={
 		fcn <- function(p) {
 			-sum(.C("dmb",as.integer(y[,1]),as.integer(nn),
 				as.double(mu1(p)),as.double(exp(sh1(p))),
 				as.integer(n),as.double(wt),res=double(n),
-				DUP=FALSE,PACKAGE="rmutil")$res)}
+				#DUP=FALSE,
+				PACKAGE="gnlm")$res)}
 		const <- 0},
 	Poisson={
 		fcn <- function(p) {
@@ -795,16 +808,18 @@ if (!censor){
 			-sum(.C("ddp",as.integer(y),as.integer(my),
 				as.double(mu1(p)),as.double(exp(sh1(p))),
 				as.integer(length(y)),as.double(wt),
-				res=double(length(y)),DUP=FALSE,
-				PACKAGE="rmutil")$res)}
+				res=double(length(y)),
+				#DUP=FALSE,
+				PACKAGE="gnlm")$res)}
 		const <- 0},
 	"mult Poisson"={
 		fcn <- function(p) {
 			-sum(.C("dmp",as.integer(y),as.integer(my),
 				as.double(mu1(p)),as.double(exp(sh1(p))),
 				as.integer(length(y)),as.double(wt),
-				res=double(length(y)),DUP=FALSE,
-				PACKAGE="rmutil")$res)}
+				res=double(length(y)),
+				#DUP=FALSE,
+				PACKAGE="gnlm")$res)}
 		const <- 0},
 	"gamma count"={
 		fcn <- function(p) {

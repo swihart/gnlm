@@ -121,7 +121,14 @@
 #' data object of class, \code{repeated}, \code{tccov}, or \code{tvcov}; the
 #' name of the response variable should be given in \code{y}. If \code{y} has
 #' class \code{repeated}, it is used as the environment.
-#' @param others Arguments controlling \code{\link{nlm}}.
+#' @param print.level Arguments controlling \code{\link{nlm}}.
+#' @param typsize Arguments controlling \code{\link{nlm}}.
+#' @param ndigit Arguments controlling \code{\link{nlm}}.
+#' @param gradtol Arguments controlling \code{\link{nlm}}.
+#' @param stepmax Arguments controlling \code{\link{nlm}}.
+#' @param steptol Arguments controlling \code{\link{nlm}}.
+#' @param iterlim Arguments controlling \code{\link{nlm}}.
+#' @param fscale Arguments controlling \code{\link{nlm}}.
 #' @return A list of class \code{gnlm} is returned that contains all of the
 #' relevant information calculated, including error codes.
 #' @author J.K. Lindsey
@@ -216,8 +223,8 @@ plevy <- function(y, m, s)
 		max=as.integer(16),
 		err=integer(1),
 		res=double(n),
-		DUP=FALSE,
-		PACKAGE="rmutil")$res
+		#DUP=FALSE,
+		PACKAGE="gnlm")$res
 
 call <- sys.call()
 #
@@ -263,7 +270,7 @@ if(n==0)stop(paste(deparse(substitute(y)),"not found or of incorrect type"))
 #
 # check if a data object is being supplied
 #
-respenv <- exists(deparse(substitute(y)),env=parent.frame())&&
+respenv <- exists(deparse(substitute(y)),envir=parent.frame())&&
 	inherits(y,"repeated")&&!inherits(envir,"repeated")
 if(respenv){
 	if(dim(y$response$y)[2]>1)
@@ -693,8 +700,8 @@ ret <- switch(distribution,
 				as.integer(y[,1]),as.integer(nn),
 				as.double(mu1(p)),as.double(exp(p[np])),
 				as.integer(n),as.double(wt),
-				res=double(n),DUP=FALSE,
-				PACKAGE="rmutil")$res)))}
+				res=double(n),#DUP=FALSE,
+				PACKAGE="gnlm")$res)))}
 		const <- 0},
 	"mult binomial"={
 		fcn <- function(p) {
@@ -702,8 +709,8 @@ ret <- switch(distribution,
 				as.integer(y[,1]),as.integer(nn),
 				as.double(mu1(p)),as.double(exp(p[np])),
 				as.integer(n),as.double(wt),
-				res=double(n),DUP=FALSE,
-				PACKAGE="rmutil")$res)))}
+				res=double(n),#DUP=FALSE,
+				PACKAGE="gnlm")$res)))}
 		const <- 0},
 	Poisson={
 		fcn <- function(p) {
@@ -724,7 +731,8 @@ ret <- switch(distribution,
 				as.integer(my),as.double(mu1(p)),
 				as.double(exp(p[np])),as.integer(length(y)),
 				as.double(wt),res=double(length(y)),
-				DUP=FALSE,PACKAGE="rmutil")$res)))}
+				#DUP=FALSE,
+				PACKAGE="gnlm")$res)))}
 		const <- 0},
 	"mult Poisson"={
 		fcn <- function(p) {
@@ -732,7 +740,8 @@ ret <- switch(distribution,
 				as.integer(my),as.double(mu1(p)),
 				as.double(exp(p[np])),as.integer(length(y)),
 				as.double(wt),res=double(length(y)),
-				DUP=FALSE,PACKAGE="rmutil")$res)))}
+				#DUP=FALSE,
+				PACKAGE="gnlm")$res)))}
 		const <- 0},
 	"gamma count"={
 		fcn <- function(p) {

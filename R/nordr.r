@@ -76,7 +76,14 @@
 #' data object of class, \code{repeated}, \code{tccov}, or \code{tvcov}; the
 #' name of the response variable should be given in \code{y}. If \code{y} has
 #' class \code{repeated}, it is used as the environment.
-#' @param others Arguments controlling \code{\link{nlm}}.
+#' @param print.level Arguments controlling \code{\link{nlm}}.
+#' @param typsize Arguments controlling \code{\link{nlm}}.
+#' @param ndigit Arguments controlling \code{\link{nlm}}.
+#' @param gradtol Arguments controlling \code{\link{nlm}}.
+#' @param stepmax Arguments controlling \code{\link{nlm}}.
+#' @param steptol Arguments controlling \code{\link{nlm}}.
+#' @param iterlim Arguments controlling \code{\link{nlm}}.
+#' @param fscale Arguments controlling \code{\link{nlm}}.
 #' @return A list of class nordr is returned that contains all of the relevant
 #' information calculated, including error codes.
 #' @author J.K. Lindsey
@@ -116,9 +123,11 @@
 #' 	16,11,18,
 #' 	3,10,16)
 #' length <- gl(3,3)
+#' \dontrun{
 #' # fit continuation ratio model with nordr and as a logistic model
 #' nordr(y, mu=~length, weights=fr, pmu=c(0,-1.4,-2.3), pint=0.13,
 #' 	dist="cont")
+#' 	}
 #' # logistic regression with reconstructed table
 #' frcr <- cbind(c(43,16,3,49,27,13),c(6,11,10,9,18,16))
 #' lengthord <- gl(3,1,6)
@@ -166,7 +175,7 @@ if(nrows==0)
 #
 # check if a data object is being supplied
 #
-respenv <- exists(deparse(substitute(y)),env=parent.frame())&&
+respenv <- exists(deparse(substitute(y)),envir=parent.frame())&&
 	inherits(y,"repeated")&&!inherits(envir,"repeated")
 if(respenv){
 	if(dim(y$response$y)[2]>1)
@@ -265,8 +274,8 @@ else {
 if(lf1>0){
 	if(is.character(attr(mu3,"model")))
 		stop("mu cannot be a W&R formula if linear is supplied")
-	dm1 <- if(respenv)wr(lin1,data=y)$design
-		else wr(lin1,data=envir)$design
+	dm1 <- if(respenv)wr(lin1model,data=y)$design
+		else wr(lin1model,data=envir)$design
 	if(is.null(mu2))mu2 <- mu3
 	mu1 <- function(p)mu3(p,dm1%*%p[(npt1+1):(npt1+lf1)])}
 else {
@@ -455,7 +464,7 @@ cname <- if(is.character(attr(z$mu,"model")))attr(z$mu,"model")
 	else if(length(grep("linear",attr(z$mu,"parameters")))>0)
 	attr(z$mu,"parameters")[grep("\\[",attr(z$mu,"parameters"))]
 	else attr(z$mu,"parameters")
-if(!is.null(z$linmodel))cname <- c(linmodel,cname)
+if(!is.null(z$linmodel))cname <- c(z$linmodel,cname)
 coef.table <- cbind(z$coef,z$se[1:z$npl])
 dimnames(coef.table) <- list(cname,c("estimate","s.e."))
 print.default(coef.table, digits=digits, print.gap=2)

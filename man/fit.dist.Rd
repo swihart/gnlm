@@ -34,7 +34,15 @@ frequency polygon of fitted values.}
 \item{add}{If TRUE, adds a new frequency polygon of fitted values without
 replotting the histogram.}
 
-\item{others}{Plotting control options.}
+\item{xlab}{Plotting control options.}
+
+\item{ylab}{Plotting control options.}
+
+\item{xlim}{Plotting control options.}
+
+\item{main}{Plotting control options.}
+
+\item{...}{Plotting control options.}
 }
 \description{
 \code{fit.dist} fits the distributions in Chapter 4 of Lindsey (1995, 2003

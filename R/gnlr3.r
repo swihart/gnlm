@@ -30,9 +30,9 @@
 # three parameter distributions.
 
 
-.First.lib <- function(lib, pkg)
-	library.dynam("gnlm", pkg, lib)
-require(rmutil)
+# .First.lib <- function(lib, pkg)
+# 	library.dynam("gnlm", pkg, lib)
+# require(rmutil)
 
 
 
@@ -131,13 +131,20 @@ require(rmutil)
 #' data object of class, \code{repeated}, \code{tccov}, or \code{tvcov}; the
 #' name of the response variable should be given in \code{y}. If \code{y} has
 #' class \code{repeated}, it is used as the environment.
-#' @param others Arguments controlling \code{\link{nlm}}.
+#' @param print.level Arguments controlling \code{\link{nlm}}.
+#' @param typsize Arguments controlling \code{\link{nlm}}.
+#' @param ndigit Arguments controlling \code{\link{nlm}}.
+#' @param gradtol Arguments controlling \code{\link{nlm}}.
+#' @param stepmax Arguments controlling \code{\link{nlm}}.
+#' @param steptol Arguments controlling \code{\link{nlm}}.
+#' @param iterlim Arguments controlling \code{\link{nlm}}.
+#' @param fscale Arguments controlling \code{\link{nlm}}.
 #' @return A list of class \code{gnlm} is returned that contains all of the
 #' relevant information calculated, including error codes.
 #' @author J.K. Lindsey
 #' @seealso \code{\link[rmutil]{finterp}}, \code{\link[gnlm]{fmr}},
 #' \code{\link{glm}}, \code{\link[gnlm]{gnlr}}, \code{\link{lm}},
-#' \code{\link[gnlm]{nlr}}, \code{\link[nls]{nls}}.
+#' \code{\link[gnlm]{nlr}}, \code{\link[stats]{nls}}.
 #' @keywords models
 #' @examples
 #' 
@@ -231,8 +238,8 @@ pginvgauss <- function(y, m, s, f)
 		max=as.integer(16),
 		err=integer(1),
 		res=double(n),
-		DUP=FALSE,
-		PACKAGE="rmutil")$res
+		#DUP=FALSE,
+		PACKAGE="gnlm")$res
 #
 # power exponential cdf
 #
@@ -248,8 +255,8 @@ ppowexp <- function(y, m, s, f){
 		max=as.integer(16),
 		err=integer(1),
 		res=double(n),
-		DUP=FALSE,
-		PACKAGE="rmutil")$res
+		#DUP=FALSE,
+		PACKAGE="gnlm")$res
 	ifelse(y-m>0,0.5+z,0.5-z)}
 #
 # power variance function Poisson density
@@ -263,8 +270,8 @@ dpvfpois <- function(y, m, s, f)
 		as.integer(length(y)),
 		as.double(rep(1,length(y))),
 		res=double(length(y)),
-		DUP=FALSE,
-		PACKAGE="rmutil")$res
+		#DUP=FALSE,
+		PACKAGE="gnlm")$res
 #
 # skew Laplace cdf
 #
@@ -310,7 +317,7 @@ if(n==0)stop(paste(deparse(substitute(y)),"not found or of incorrect type"))
 #
 # check if a data object is being supplied
 #
-respenv <- exists(deparse(substitute(y)),env=parent.frame())&&
+respenv <- exists(deparse(substitute(y)),envir=parent.frame())&&
 	inherits(y,"repeated")&&!inherits(envir,"repeated")
 if(respenv){
 	if(dim(y$response$y)[2]>1)

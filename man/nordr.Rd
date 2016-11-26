@@ -51,7 +51,21 @@ data object of class, \code{repeated}, \code{tccov}, or \code{tvcov}; the
 name of the response variable should be given in \code{y}. If \code{y} has
 class \code{repeated}, it is used as the environment.}
 
-\item{others}{Arguments controlling \code{\link{nlm}}.}
+\item{print.level}{Arguments controlling \code{\link{nlm}}.}
+
+\item{ndigit}{Arguments controlling \code{\link{nlm}}.}
+
+\item{gradtol}{Arguments controlling \code{\link{nlm}}.}
+
+\item{steptol}{Arguments controlling \code{\link{nlm}}.}
+
+\item{fscale}{Arguments controlling \code{\link{nlm}}.}
+
+\item{iterlim}{Arguments controlling \code{\link{nlm}}.}
+
+\item{typsize}{Arguments controlling \code{\link{nlm}}.}
+
+\item{stepmax}{Arguments controlling \code{\link{nlm}}.}
 }
 \value{
 A list of class nordr is returned that contains all of the relevant
@@ -101,9 +115,11 @@ fr <- c(43,6,9,
 	16,11,18,
 	3,10,16)
 length <- gl(3,3)
+\dontrun{
 # fit continuation ratio model with nordr and as a logistic model
 nordr(y, mu=~length, weights=fr, pmu=c(0,-1.4,-2.3), pint=0.13,
 	dist="cont")
+	}
 # logistic regression with reconstructed table
 frcr <- cbind(c(43,16,3,49,27,13),c(6,11,10,9,18,16))
 lengthord <- gl(3,1,6)
