@@ -383,7 +383,7 @@ if(np>0){
 		ndigit=ndigit,gradtol=gradtol,stepmax=stepmax,steptol=steptol,
 		iterlim=iterlim,fscale=fscale)
 	z0$minimum <- z0$minimum-sum(wt*lchoose(nn,y[,1]))}
-else z0 <- list(minimum=fscale+sum(const),estimate=p,code=0,iterations=0)
+else z0 <- list(minimum=fscale-sum(wt*lchoose(nn,y[,1])),estimate=p,code=0,iterations=0)
 #
 # calculate fitted values and raw residuals
 #

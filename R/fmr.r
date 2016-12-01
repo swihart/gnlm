@@ -674,7 +674,7 @@ if(any(is.na((mixt(p)))))
 	stop("The mix function returns NAs: probably invalid initial values")
 #
 # create the appropriate likelihood function
-#
+s <- NULL
 ret <- switch(distribution,
 	binomial={
 		fcn <- function(p) {
