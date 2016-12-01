@@ -11,5 +11,9 @@ Depends:
 Description: A variety of functions to fit linear and nonlinear
     regression with a large selection of distributions.
 License: GPL (>= 2)
-URL: popgen.unimaas.nl/~jlindsey/rcode.html
+URL: http://www.commanster.eu/rcode.html
+BugReports: https:/github.com/swihart/gnlm/issues
+Encoding: UTF-8
+LazyData: true
+LazyLoad: true
 RoxygenNote: 5.0.1
