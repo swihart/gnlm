@@ -1,5 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit README.Rmd -->
+[![Travis-CI Build Status](https://travis-ci.org/swihart/gnlm.svg?branch=master)](https://travis-ci.org/swihart/gnlm)
+
 `gnlm` R package
 ================
 
