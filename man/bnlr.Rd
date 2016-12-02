@@ -99,6 +99,7 @@ dose <- log10(100/c(2.686,2.020,1.520,1.143,0.860,0.647,0.486))
 summary(glm(y~dose, family=binomial))
 bnlr(y, mu=~dose, pmu=c(1,1))
 summary(glm(y~dose, family=binomial(link=probit)))
+\dontrun{
 bnlr(y, link="probit", mu=~dose, pmu=c(1,1))
 bnlr(y, link="log log", mu=~dose, pmu=c(1,1))
 bnlr(y, link="comp log log", mu=~dose, pmu=c(1,1))
@@ -110,7 +111,7 @@ bnlr(y, link="mixture", mu=~dose, pmu=c(60,-30), pshape=-2.5)
 mu <- function(p) -p[1]*(log10(p[2])-dose)
 bnlr(y, mu=mu, pmu=c(1,100))
 bnlr(y, link="probit", mu=mu, pmu=c(1,100))
-
+}
 }
 \author{
 J.K. Lindsey
