@@ -99,8 +99,8 @@ dose <- log10(100/c(2.686,2.020,1.520,1.143,0.860,0.647,0.486))
 summary(glm(y~dose, family=binomial))
 bnlr(y, mu=~dose, pmu=c(1,1))
 summary(glm(y~dose, family=binomial(link=probit)))
-\dontrun{
 bnlr(y, link="probit", mu=~dose, pmu=c(1,1))
+\dontrun{
 bnlr(y, link="log log", mu=~dose, pmu=c(1,1))
 bnlr(y, link="comp log log", mu=~dose, pmu=c(1,1))
 bnlr(y, link="Cauchy", mu=~dose, pmu=c(60,-30))
