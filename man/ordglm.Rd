@@ -38,10 +38,6 @@ wt <- c(19,29,24,497,560,269)
 ordglm(y~carrier, weights=wt)
 
 }
-\author{
-J.K. Lindsey, adapted and heavily modified from Matlab code
-(ordinalMLE) by J.H. Albert.
-}
 \references{
 Jansen, J. (1991) Fitting regression models to ordinal data.
 Biometrical Journal 33, 807-815.
@@ -52,5 +48,8 @@ Springer-Verlag.
 \seealso{
 \code{\link{glm}}, \code{\link[gnlm]{nordr}}
 }
+\author{
+J.K. Lindsey, adapted and heavily modified from Matlab code
+(ordinalMLE) by J.H. Albert.
+}
 \keyword{models}
-

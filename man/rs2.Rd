@@ -38,12 +38,11 @@ y <- rpois(20,1+2*sqrt(x1)+3*log(x2)+4*x1+log(x2)^2+2*sqrt(x1)*log(x2))
 rs2(y, x1, x2, family=poisson)
 
 }
-\author{
-J.K. Lindsey
-}
 \seealso{
 \code{\link{lm}}, \code{\link{glm}}, \code{\link[gnlm]{gnlr}},
 \code{\link[gnlm]{gnlr3}}, \code{\link[gnlm]{rs3}}
 }
+\author{
+J.K. Lindsey
+}
 \keyword{models}
-

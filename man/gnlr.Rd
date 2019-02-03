@@ -212,9 +212,6 @@ dist <- ~-sum(dnorm(y,a+b*sex,v,log=TRUE))
 gnlr(y, dist=dist,pmu=1:3)
 
 }
-\author{
-J.K. Lindsey
-}
 \seealso{
 \code{\link[rmutil]{finterp}}, \code{\link[gnlm]{fmr}},
 \code{\link{glm}}, \code{\link[repeated]{gnlmix}},
@@ -222,5 +219,7 @@ J.K. Lindsey
 \code{\link[gnlm]{gnlr3}}, \code{\link{lm}}, \code{\link[gnlm]{nlr}},
 \code{\link[stats]{nls}}.
 }
+\author{
+J.K. Lindsey
+}
 \keyword{models}
-

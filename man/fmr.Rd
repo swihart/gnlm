@@ -6,10 +6,10 @@
 \usage{
 fmr(y = NULL, distribution = "normal", mu = NULL, mix = NULL,
   linear = NULL, pmu = NULL, pmix = NULL, pshape = NULL,
-  censor = "right", exact = FALSE, wt = 1, delta = 1, common = FALSE,
-  envir = parent.frame(), print.level = 0, typsize = abs(p),
-  ndigit = 10, gradtol = 1e-05, stepmax = 10 * sqrt(p \%*\% p),
-  steptol = 1e-05, iterlim = 100, fscale = 1)
+  censor = "right", exact = FALSE, wt = 1, delta = 1,
+  common = FALSE, envir = parent.frame(), print.level = 0,
+  typsize = abs(p), ndigit = 10, gradtol = 1e-05, stepmax = 10 *
+  sqrt(p \%*\% p), steptol = 1e-05, iterlim = 100, fscale = 1)
 }
 \arguments{
 \item{y}{A response vector for uncensored data, a two column matrix for
@@ -190,12 +190,11 @@ fmr(y, dist="negative binomial", mu=~exp(linear), linear=~x2, mix=~x1,
 	pmu=c(1,0.2), pshape=0, pmix=c(1,0))
 
 }
-\author{
-J.K. Lindsey
-}
 \seealso{
 \code{\link[rmutil]{finterp}}, \code{\link{glm}},
 \code{\link[gnlm]{gnlr}}, \code{\link[gnlm]{gnlr3}}, \code{\link{lm}}.
 }
+\author{
+J.K. Lindsey
+}
 \keyword{models}
-

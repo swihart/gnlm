@@ -218,7 +218,7 @@
 #' @importFrom graphics lines par rect 
 #' @importFrom stats dbeta dbinom dcauchy dexp dgamma dlnorm dlogis dnbinom dnorm dpois dt dweibull family binomial gaussian Gamma inverse.gaussian poisson quasi quasibinomial quasipoisson glm model.frame model.matrix model.response na.fail nlm pbeta pcauchy pgamma pgeom plogis pnbinom pnorm ppois pt pweibull qnorm summary.glm terms weighted.mean
 #' @import rmutil
-#' @useDynLib gnlm
+#' @useDynLib gnlm, .registration=TRUE
 #' @export gnlr
 gnlr <- function(y=NULL, distribution="normal", pmu=NULL, pshape=NULL, mu=NULL,
 	shape=NULL, linear=NULL, exact=FALSE, wt=1, delta=1, shfn=FALSE,

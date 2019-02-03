@@ -6,8 +6,9 @@
 \usage{
 fit.dist(y, ni, distribution = "normal", breaks = FALSE, delta = 1,
   censor = FALSE, exact = TRUE, plot = FALSE, add = FALSE,
-  xlab = deparse(substitute(y)), ylab = "Probability", xlim = range(y),
-  main = paste("Histogram of", deparse(substitute(y))), ...)
+  xlab = deparse(substitute(y)), ylab = "Probability",
+  xlim = range(y), main = paste("Histogram of",
+  deparse(substitute(y))), ...)
 }
 \arguments{
 \item{y}{Vector of observations.}
@@ -68,12 +69,11 @@ fit.dist(y, f, "log normal", delta=100, plot=TRUE, add=TRUE, lty=3)
 fit.dist(y, f, "logistic", delta=100, exact=FALSE, plot=TRUE, add=TRUE, lty=2)
 
 }
-\author{
-J.K. Lindsey
-}
 \references{
 Lindsey, J.K. (1995) Introductory Statistics: A Modelling
 Approach. Oxford: Oxford University Press.
 }
+\author{
+J.K. Lindsey
+}
 \keyword{models}
-

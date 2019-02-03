@@ -43,12 +43,11 @@ y <- c(9,11,14,33,11,19,20,27,22,32,24,24,20,28,25,41,26,31,37,34)
 rs3(y, x1, x2, x3, family=poisson)
 
 }
-\author{
-J.K. Lindsey
-}
 \seealso{
 \code{\link{lm}}, \code{\link{glm}}, \code{\link[gnlm]{gnlr}},
 \code{\link[gnlm]{gnlr3}}, \code{\link[gnlm]{rs2}}
 }
+\author{
+J.K. Lindsey
+}
 \keyword{models}
-

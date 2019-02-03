@@ -1,5 +1,27 @@
 # gnlm R package
 Bruce Swihart  
+Feb 2019
+
+## Re-Submission 1
+
+  * fixed an `Found no calls to: ‘R_registerRoutines’, ‘R_useDynamicSymbols’` NOTE.  
+
+## Test environments
+* local OS X install: R version 3.5.2 (2018-12-20) -- "Eggshell Igloo"
+* Ubuntu 14.04.5 LTS (on travis-ci): R version 3.5.2 (2017-01-27)
+* win-builder: R Under development (unstable) (2019-01-31 r76038)
+
+## R CMD check results
+There were no ERRORs or WARNINGs or NOTEs.
+
+
+## Downstream dependencies
+There are currently no downstream dependencies for this package.
+
+
+
+# gnlm R package
+Bruce Swihart  
 December 2016
 
 ## Test environments

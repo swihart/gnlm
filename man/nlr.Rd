@@ -4,8 +4,8 @@
 \alias{nlr}
 \title{Nonlinear Normal, Gamma, and Inverse Gaussian Regression Models}
 \usage{
-nlr(y = NULL, mu = NULL, pmu = NULL, distribution = "normal", wt = 1,
-  delta = 1, envir = parent.frame(), print.level = 0,
+nlr(y = NULL, mu = NULL, pmu = NULL, distribution = "normal",
+  wt = 1, delta = 1, envir = parent.frame(), print.level = 0,
   typsize = abs(pmu), ndigit = 10, gradtol = 1e-05, stepmax = 10 *
   sqrt(pmu \%*\% pmu), steptol = 1e-05, iterlim = 100, fscale = 1)
 }
@@ -97,14 +97,13 @@ nlr(y, mu=~b0+c0*exp(c1*x), pmu=list(b0=0.2,c0=3,c1=0.2))
 nlr(y, dist="gamma", mu=~b0+c0*exp(c1*x), pmu=list(b0=0.2,c0=3,c1=0.2))
 
 }
-\author{
-J.K. Lindsey
-}
 \seealso{
 \code{\link[rmutil]{finterp}}, \code{\link[gnlm]{fmr}},
 \code{\link{glm}}, \code{\link[repeated]{glmm}},
 \code{\link[repeated]{gnlmm}}, \code{\link[gnlm]{gnlr}},
 \code{\link[gnlm]{gnlr3}}, \code{\link{lm}}, \code{\link[stats]{nls}}.
 }
+\author{
+J.K. Lindsey
+}
 \keyword{models}
-

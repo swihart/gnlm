@@ -16,4 +16,4 @@ BugReports: https:/github.com/swihart/gnlm/issues
 Encoding: UTF-8
 LazyData: true
 LazyLoad: true
-RoxygenNote: 5.0.1
+RoxygenNote: 6.1.1

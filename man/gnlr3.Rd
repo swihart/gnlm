@@ -6,10 +6,10 @@
 \usage{
 gnlr3(y = NULL, distribution = "normal", mu = NULL, shape = NULL,
   family = NULL, linear = NULL, pmu = NULL, pshape = NULL,
-  pfamily = NULL, exact = FALSE, wt = 1, common = FALSE, delta = 1,
-  envir = parent.frame(), print.level = 0, typsize = abs(p),
-  ndigit = 10, gradtol = 1e-05, stepmax = 10 * sqrt(p \%*\% p),
-  steptol = 1e-05, iterlim = 100, fscale = 1)
+  pfamily = NULL, exact = FALSE, wt = 1, common = FALSE,
+  delta = 1, envir = parent.frame(), print.level = 0,
+  typsize = abs(p), ndigit = 10, gradtol = 1e-05, stepmax = 10 *
+  sqrt(p \%*\% p), steptol = 1e-05, iterlim = 100, fscale = 1)
 }
 \arguments{
 \item{y}{The response vector for uncensored data, two columns for censored
@@ -196,13 +196,12 @@ gnlr3(y, dist="Weibull", mu=~exp(a+b*sex+c*age), shape=~d+e*sex+c*age,
 	family=~f+g*sex+c*age, pmu=c(2.5,1,0,1,0,1,0), common=TRUE)
 
 }
-\author{
-J.K. Lindsey
-}
 \seealso{
 \code{\link[rmutil]{finterp}}, \code{\link[gnlm]{fmr}},
 \code{\link{glm}}, \code{\link[gnlm]{gnlr}}, \code{\link{lm}},
 \code{\link[gnlm]{nlr}}, \code{\link[stats]{nls}}.
 }
+\author{
+J.K. Lindsey
+}
 \keyword{models}
-
