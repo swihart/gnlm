@@ -438,7 +438,7 @@ z1}
 
 ### print method
 ###
-print.nordr <- function(x,digits=max(3,.Options$digits-3),correlation=TRUE){
+print.nordr <- function(x,digits=max(3,.Options$digits-3),correlation=TRUE, ...){
   z <- x
 m <- z$states
 cat("\nCall:",deparse(z$call),sep="\n")

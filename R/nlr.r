@@ -308,7 +308,7 @@ deviance.nlr <- function(z) 2*z$maxlike
 
 ### print method
 ###
-print.nlr <- function(x,digits=max(4,.Options$digits-3),correlation=TRUE){
+print.nlr <- function(x,digits=max(4,.Options$digits-3),correlation=TRUE,...){
   z <- x
 cat("\nCall:",deparse(z$call),sep="\n")
 cat("\n")
