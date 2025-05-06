@@ -202,13 +202,13 @@ cat("Iterations:",z$iterations,"\n")
 class(z) <- "glm"
 print(z)}
 
-print.summary.rs <- function(z,...){
+print.summary.rs <- function(x,...){
 cat("\nPowered transformed response surface\n\n")
-cat("Powers:",z$powers,"\n")
-cat("Iterations:",z$iterations,"\n")
-#print.summary.glm(z,...)
-class(z) <- "summary.glm"
-print(z)}
+cat("Powers:",x$powers,"\n")
+cat("Iterations:",x$iterations,"\n")
+#print.summary.glm(x,...)
+class(x) <- "summary.glm"
+print(x)}
 
 summary.rs <- function(z,...){
 zz <- summary.glm(z,...)
