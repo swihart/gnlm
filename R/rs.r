@@ -194,13 +194,13 @@ return(z)}
 
 ### print and summary methods
 ###
-print.rs <- function(z,...){
+print.rs <- function(x,...){
 cat("\nPowered transformed response surface\n\n")
-cat("Powers:",z$powers,"\n")
-cat("Iterations:",z$iterations,"\n")
-#print.glm(z,...)
-class(z) <- "glm"
-print(z)}
+cat("Powers:",x$powers,"\n")
+cat("Iterations:",x$iterations,"\n")
+#print.glm(x,...)
+class(x) <- "glm"
+print(x)}
 
 print.summary.rs <- function(x,...){
 cat("\nPowered transformed response surface\n\n")
