@@ -213,7 +213,8 @@ type <- match.arg(type)
 if(type=="deviance")z$dev.res
 else z$residuals}
 
-print.ordglm <- function(z,digits=max(3,.Options$digits-3),correlation=TRUE){
+print.ordglm <- function(x,digits=max(3,.Options$digits-3),correlation=TRUE){
+  z <- x
 cat("\nCall:",deparse(z$call),sep="\n")
 cat("\n")
 cat("-Log likelihood   ",z$maxlike,"\n")
