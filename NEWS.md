@@ -1,15 +1,21 @@
-#------------------------------------------------------------------------------
-#version 1.1.1
-#------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+version 1.1.2
+------------------------------------------------------------------------------
+
+  * Updated AIC description (thanks to Eva).
+
+------------------------------------------------------------------------------
+version 1.1.1
+------------------------------------------------------------------------------
 
   * Fixed an Found no calls to: ‘R_registerRoutines’, ‘R_useDynamicSymbols’ NOTE.
   * Fixed BUGreports url in DESCRIPTION
 
-#------------------------------------------------------------------------------
-#version 1.1.0
-#------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+version 1.1.0
+------------------------------------------------------------------------------
 
-## Major changes ##
+  * Major changes
 
 Passed CRAN checks and is back on CRAN.  Please see github page 
 https://github.com/swihart/gnlm to see the changes required 
@@ -19,12 +25,12 @@ https://github.com/swihart/gnlm/issues.
 
 **Above this line will be News/Changes for `gnlm` only**
 
-**Below this line corresponds to [changes.txt](http://www.commanster.eu/rcode/changes.txt), which was Jim Lindsey's file for
+**Below this line corresponds to [changes.txt](https://www.commanster.eu/rcode/changes.txt), which was Jim Lindsey's file for
 detailing changes across the v1.0 packages `rmutil`, `repeated`, `gnlm`, `growth`, `event`, `stable` on his homepage**
 
-#------------------------------------------------------------------------------
-#version 1.0
-#------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+version 1.0
+------------------------------------------------------------------------------
 
 30.11.10 (growth)
 

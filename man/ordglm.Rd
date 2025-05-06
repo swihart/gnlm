@@ -4,8 +4,13 @@
 \alias{ordglm}
 \title{Generalized Linear Ordinal Regression Models}
 \usage{
-ordglm(formula, data = parent.frame(), link = "logit", maxiter = 10,
-  weights = 1)
+ordglm(
+  formula,
+  data = parent.frame(),
+  link = "logit",
+  maxiter = 10,
+  weights = 1
+)
 }
 \arguments{
 \item{formula}{A model formula. The response must be integers numbered from

@@ -4,8 +4,16 @@
 \alias{rs3}
 \title{Three-factor Box-Tidwell Nonlinear Response Surface Models}
 \usage{
-rs3(y, x1, x2, x3, power = c(1, 1, 1), weight = rep(1, length(x1)),
-  family = gaussian, iterlim = 20)
+rs3(
+  y,
+  x1,
+  x2,
+  x3,
+  power = c(1, 1, 1),
+  weight = rep(1, length(x1)),
+  family = gaussian,
+  iterlim = 20
+)
 }
 \arguments{
 \item{y}{Response variable}

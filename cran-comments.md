@@ -1,5 +1,32 @@
 # gnlm R package
 Bruce Swihart  
+May 2025
+
+## Re-Submission 2
+
+  * Updated AIC
+  * fix  lazydata note
+  * fix no new news note
+  * fixed urls
+  * fixed 
+  * fixed news section
+
+## Test environments
+* local OS X install: R version 4.2.2 (2022-10-31)
+    * Platform: x86_64-apple-darwin17.0 (64-bit)
+    * Running under: macOS Big Sur 11.2.3
+* rhub::rhub_check(platforms=c("gcc13","clang18","windows"))
+
+
+## R CMD check results
+There were no ERRORs or WARNINGs or NOTEs.
+
+
+## Downstream dependencies
+There are currently no downstream dependencies for this package.
+
+# gnlm R package
+Bruce Swihart  
 Feb 2019
 
 ## Re-Submission 1

@@ -44,7 +44,7 @@
 #' be scalars. (See \code{\link[rmutil]{finterp}}.)
 #' 
 #' The printed output includes the -log likelihood (not the deviance), the
-#' corresponding AIC, the maximum likelihood estimates, standard errors, and
+#' corresponding AIC (which needs to be multiplied by 2 to match `stats::glm`), the maximum likelihood estimates, standard errors, and
 #' correlations.
 #' 
 #' 

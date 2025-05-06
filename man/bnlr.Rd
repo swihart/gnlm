@@ -4,11 +4,24 @@
 \alias{bnlr}
 \title{Binomial Nonlinear Regression Models}
 \usage{
-bnlr(y = NULL, link = "logit", mu = NULL, linear = NULL,
-  pmu = NULL, pshape = NULL, wt = 1, envir = parent.frame(),
-  print.level = 0, typsize = abs(p), ndigit = 10, gradtol = 1e-05,
-  stepmax = 10 * sqrt(p \%*\% p), steptol = 1e-05, iterlim = 100,
-  fscale = 1)
+bnlr(
+  y = NULL,
+  link = "logit",
+  mu = NULL,
+  linear = NULL,
+  pmu = NULL,
+  pshape = NULL,
+  wt = 1,
+  envir = parent.frame(),
+  print.level = 0,
+  typsize = abs(p),
+  ndigit = 10,
+  gradtol = 1e-05,
+  stepmax = 10 * sqrt(p \%*\% p),
+  steptol = 1e-05,
+  iterlim = 100,
+  fscale = 1
+)
 }
 \arguments{
 \item{y}{A two column matrix of binomial data or censored data or an object

@@ -4,8 +4,15 @@
 \alias{rs2}
 \title{Two-factor Box-Tidwell Nonlinear Response Surface Models}
 \usage{
-rs2(y, x1, x2, power = c(1, 1), weight = rep(1, length(x1)),
-  family = gaussian, iterlim = 20)
+rs2(
+  y,
+  x1,
+  x2,
+  power = c(1, 1),
+  weight = rep(1, length(x1)),
+  family = gaussian,
+  iterlim = 20
+)
 }
 \arguments{
 \item{y}{Response variable}

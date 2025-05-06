@@ -4,12 +4,30 @@
 \alias{gnlr3}
 \title{Generalized Nonlinear Regression Models for Three Parameter Distributions}
 \usage{
-gnlr3(y = NULL, distribution = "normal", mu = NULL, shape = NULL,
-  family = NULL, linear = NULL, pmu = NULL, pshape = NULL,
-  pfamily = NULL, exact = FALSE, wt = 1, common = FALSE,
-  delta = 1, envir = parent.frame(), print.level = 0,
-  typsize = abs(p), ndigit = 10, gradtol = 1e-05, stepmax = 10 *
-  sqrt(p \%*\% p), steptol = 1e-05, iterlim = 100, fscale = 1)
+gnlr3(
+  y = NULL,
+  distribution = "normal",
+  mu = NULL,
+  shape = NULL,
+  family = NULL,
+  linear = NULL,
+  pmu = NULL,
+  pshape = NULL,
+  pfamily = NULL,
+  exact = FALSE,
+  wt = 1,
+  common = FALSE,
+  delta = 1,
+  envir = parent.frame(),
+  print.level = 0,
+  typsize = abs(p),
+  ndigit = 10,
+  gradtol = 1e-05,
+  stepmax = 10 * sqrt(p \%*\% p),
+  steptol = 1e-05,
+  iterlim = 100,
+  fscale = 1
+)
 }
 \arguments{
 \item{y}{The response vector for uncensored data, two columns for censored

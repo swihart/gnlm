@@ -4,12 +4,30 @@
 \alias{fmr}
 \title{Generalized Nonlinear Regression Models with Two or Three Point Mixtures}
 \usage{
-fmr(y = NULL, distribution = "normal", mu = NULL, mix = NULL,
-  linear = NULL, pmu = NULL, pmix = NULL, pshape = NULL,
-  censor = "right", exact = FALSE, wt = 1, delta = 1,
-  common = FALSE, envir = parent.frame(), print.level = 0,
-  typsize = abs(p), ndigit = 10, gradtol = 1e-05, stepmax = 10 *
-  sqrt(p \%*\% p), steptol = 1e-05, iterlim = 100, fscale = 1)
+fmr(
+  y = NULL,
+  distribution = "normal",
+  mu = NULL,
+  mix = NULL,
+  linear = NULL,
+  pmu = NULL,
+  pmix = NULL,
+  pshape = NULL,
+  censor = "right",
+  exact = FALSE,
+  wt = 1,
+  delta = 1,
+  common = FALSE,
+  envir = parent.frame(),
+  print.level = 0,
+  typsize = abs(p),
+  ndigit = 10,
+  gradtol = 1e-05,
+  stepmax = 10 * sqrt(p \%*\% p),
+  steptol = 1e-05,
+  iterlim = 100,
+  fscale = 1
+)
 }
 \arguments{
 \item{y}{A response vector for uncensored data, a two column matrix for

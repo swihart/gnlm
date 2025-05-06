@@ -5,12 +5,29 @@
 \title{Generalized Nonlinear Regression Models for One and Two Parameter
 Distributions}
 \usage{
-gnlr(y = NULL, distribution = "normal", pmu = NULL, pshape = NULL,
-  mu = NULL, shape = NULL, linear = NULL, exact = FALSE, wt = 1,
-  delta = 1, shfn = FALSE, common = FALSE, envir = parent.frame(),
-  print.level = 0, typsize = abs(p), ndigit = 10, gradtol = 1e-05,
-  stepmax = 10 * sqrt(p \%*\% p), steptol = 1e-05, iterlim = 100,
-  fscale = 1)
+gnlr(
+  y = NULL,
+  distribution = "normal",
+  pmu = NULL,
+  pshape = NULL,
+  mu = NULL,
+  shape = NULL,
+  linear = NULL,
+  exact = FALSE,
+  wt = 1,
+  delta = 1,
+  shfn = FALSE,
+  common = FALSE,
+  envir = parent.frame(),
+  print.level = 0,
+  typsize = abs(p),
+  ndigit = 10,
+  gradtol = 1e-05,
+  stepmax = 10 * sqrt(p \%*\% p),
+  steptol = 1e-05,
+  iterlim = 100,
+  fscale = 1
+)
 }
 \arguments{
 \item{y}{A response vector for uncensored data, a two column matrix for
@@ -138,7 +155,7 @@ unknowns in which case factor variables cannot be used and parameters must
 be scalars. (See \code{\link[rmutil]{finterp}}.)
 
 The printed output includes the -log likelihood (not the deviance), the
-corresponding AIC, the maximum likelihood estimates, standard errors, and
+corresponding AIC (which needs to be multiplied by 2 to match `stats::glm`), the maximum likelihood estimates, standard errors, and
 correlations.
 }
 \examples{

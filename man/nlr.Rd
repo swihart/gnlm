@@ -4,10 +4,23 @@
 \alias{nlr}
 \title{Nonlinear Normal, Gamma, and Inverse Gaussian Regression Models}
 \usage{
-nlr(y = NULL, mu = NULL, pmu = NULL, distribution = "normal",
-  wt = 1, delta = 1, envir = parent.frame(), print.level = 0,
-  typsize = abs(pmu), ndigit = 10, gradtol = 1e-05, stepmax = 10 *
-  sqrt(pmu \%*\% pmu), steptol = 1e-05, iterlim = 100, fscale = 1)
+nlr(
+  y = NULL,
+  mu = NULL,
+  pmu = NULL,
+  distribution = "normal",
+  wt = 1,
+  delta = 1,
+  envir = parent.frame(),
+  print.level = 0,
+  typsize = abs(pmu),
+  ndigit = 10,
+  gradtol = 1e-05,
+  stepmax = 10 * sqrt(pmu \%*\% pmu),
+  steptol = 1e-05,
+  iterlim = 100,
+  fscale = 1
+)
 }
 \arguments{
 \item{y}{The response vector or an object of class, \code{response} (created

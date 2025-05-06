@@ -1,5 +1,5 @@
 Package: gnlm
-Version: 1.1.1
+Version: 1.1.2
 Title: Generalized Nonlinear Regression Models
 Authors@R: c(
     person("Bruce", "Swihart", email="bruce.swihart@gmail.com", role=c("cre", "aut")),
@@ -11,9 +11,7 @@ Depends:
 Description: A variety of functions to fit linear and nonlinear
     regression with a large selection of distributions.
 License: GPL (>= 2)
-URL: http://www.commanster.eu/rcode.html
+URL: https://www.commanster.eu/rcode.html
 BugReports: https://github.com/swihart/gnlm/issues
 Encoding: UTF-8
-LazyData: true
-LazyLoad: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.2.1

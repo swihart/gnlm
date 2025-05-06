@@ -4,11 +4,22 @@
 \alias{fit.dist}
 \title{Fit Probability Distributions to Frequency Data}
 \usage{
-fit.dist(y, ni, distribution = "normal", breaks = FALSE, delta = 1,
-  censor = FALSE, exact = TRUE, plot = FALSE, add = FALSE,
-  xlab = deparse(substitute(y)), ylab = "Probability",
-  xlim = range(y), main = paste("Histogram of",
-  deparse(substitute(y))), ...)
+fit.dist(
+  y,
+  ni,
+  distribution = "normal",
+  breaks = FALSE,
+  delta = 1,
+  censor = FALSE,
+  exact = TRUE,
+  plot = FALSE,
+  add = FALSE,
+  xlab = deparse(substitute(y)),
+  ylab = "Probability",
+  xlim = range(y),
+  main = paste("Histogram of", deparse(substitute(y))),
+  ...
+)
 }
 \arguments{
 \item{y}{Vector of observations.}

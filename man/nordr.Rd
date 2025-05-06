@@ -4,11 +4,24 @@
 \alias{nordr}
 \title{Nonlinear Ordinal Regression Models}
 \usage{
-nordr(y = NULL, distribution = "proportional", mu = NULL,
-  linear = NULL, pmu = NULL, pintercept = NULL, weights = NULL,
-  envir = parent.frame(), print.level = 0, ndigit = 10,
-  gradtol = 1e-05, steptol = 1e-05, fscale = 1, iterlim = 100,
-  typsize = abs(p), stepmax = 10 * sqrt(p \%*\% p))
+nordr(
+  y = NULL,
+  distribution = "proportional",
+  mu = NULL,
+  linear = NULL,
+  pmu = NULL,
+  pintercept = NULL,
+  weights = NULL,
+  envir = parent.frame(),
+  print.level = 0,
+  ndigit = 10,
+  gradtol = 1e-05,
+  steptol = 1e-05,
+  fscale = 1,
+  iterlim = 100,
+  typsize = abs(p),
+  stepmax = 10 * sqrt(p \%*\% p)
+)
 }
 \arguments{
 \item{y}{A vector of ordinal responses, integers numbered from zero to one
