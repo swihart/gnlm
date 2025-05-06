@@ -8,7 +8,7 @@ May 2025
   * fix  lazydata note
   * fix no new news note
   * fixed urls
-  * fixed 
+  * fixed S3 notes
   * fixed news section
 
 ## Test environments
